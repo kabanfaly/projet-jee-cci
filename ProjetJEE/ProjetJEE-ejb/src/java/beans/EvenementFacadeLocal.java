@@ -28,5 +28,7 @@ public interface EvenementFacadeLocal {
     List<Evenement> findRange(int[] range);
 
     int count();
+
+    Evenement findEvenementById(int id);
     
 }

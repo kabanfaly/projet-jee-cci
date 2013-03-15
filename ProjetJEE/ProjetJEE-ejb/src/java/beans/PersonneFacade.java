@@ -26,5 +26,11 @@ public class PersonneFacade extends AbstractFacade<Personne> implements Personne
     public PersonneFacade() {
         super(Personne.class);
     }
+
+    @Override
+    public Personne findPersonneById(int id) {
+        return (Personne)em.createNamedQuery("Carriere.findByIdcarriere").setParameter("idpersonne", id);
+    }
+    
     
 }

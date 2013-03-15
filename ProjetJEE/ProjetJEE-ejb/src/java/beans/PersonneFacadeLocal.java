@@ -28,5 +28,7 @@ public interface PersonneFacadeLocal {
     List<Personne> findRange(int[] range);
 
     int count();
+
+    Personne findPersonneById(int id);
     
 }

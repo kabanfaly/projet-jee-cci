@@ -28,5 +28,7 @@ public interface CarriereFacadeLocal {
     List<Carriere> findRange(int[] range);
 
     int count();
+
+    Carriere findCarriereById(int id);
     
 }
