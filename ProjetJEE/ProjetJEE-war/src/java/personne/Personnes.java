@@ -4,18 +4,26 @@
  */
 package personne;
 
+import beans.PersonneFacadeLocal;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.Date;
+import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import metier.Personne;
 
 /**
  *
  * @author kaba
  */
-public class personne extends HttpServlet {
+public class Personnes extends HttpServlet {
+
+    @EJB
+    private PersonneFacadeLocal personneFacade;
 
     /**
      * Processes requests for both HTTP
@@ -29,22 +37,27 @@ public class personne extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet personne</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet personne at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {            
-            out.close();
+        String page = "personnes.jsp";
+        request.getSession(true).setAttribute("message", "");
+        String action = request.getParameter("action");
+        if (action.equals("test")) { // creation des personnes predefinie
+            this.createPersonneTests();
+            Collection<Personne> p = personneFacade.findAll();
+            request.setAttribute("personnes", p);
+        } else {
+            Collection<Personne> p = personneFacade.findAll();
+            request.setAttribute("personnes", p);
         }
+        RequestDispatcher dp = request.getRequestDispatcher(page);
+        dp.forward(request, response);
+
+    }
+
+    private void createPersonneTests() {
+        personneFacade.create(new Personne("KABA", "Mamady", 2008, "OUI", "mkaba", "kaba", "mamkaba2000@yahoo.fr", new Date(1988, 12, 8)));
+        personneFacade.create(new Personne("KABA_2", "Mamady", 2008, "OUI", "mkaba", "kaba", "mamkaba2001@yahoo.fr", new Date(1987, 12, 8)));
+        personneFacade.create(new Personne("KABA_3", "Mamady", 2008, "OUI", "mkaba", "kaba", "mamkaba2002@yahoo.fr", new Date(1986, 12, 8)));
+        personneFacade.create(new Personne("KABA_4", "Mamady", 2008, "OUI", "mkaba", "kaba", "mamkaba2003@yahoo.fr", new Date(1985, 12, 8)));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

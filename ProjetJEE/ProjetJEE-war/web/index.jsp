@@ -4,14 +4,8 @@
     Author     : kaba
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
+<%@include file="entete.jsp" %>
         <h1>Hello World!</h1>
-    </body>
-</html>
+        <a href="personnes?action=test">Personnes tests</a><br>
+        <a href="personnes?action=tout">Personnes</a>
+<%@include file="pied.jsp" %>
