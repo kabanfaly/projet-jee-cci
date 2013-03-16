@@ -29,7 +29,7 @@ public class EvenementFacade extends AbstractFacade<Evenement> implements Evenem
 
     @Override
     public Evenement findEvenementById(int id) {
-        return (Evenement)em.createNamedQuery("Evenement.findByIdevenement").setParameter("idevenement", id);
+        return (Evenement)em.createNamedQuery("Evenement.findByIdevenement").setParameter("idevenement", id).getSingleResult();
     }
     
     

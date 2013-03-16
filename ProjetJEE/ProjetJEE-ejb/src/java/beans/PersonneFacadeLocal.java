@@ -30,5 +30,6 @@ public interface PersonneFacadeLocal {
     int count();
 
     Personne findPersonneById(int id);
-    
+
+    Personne findPersonneByEmail(String email);
 }

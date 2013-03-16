@@ -29,8 +29,7 @@ public class CarriereFacade extends AbstractFacade<Carriere> implements Carriere
 
     @Override
     public Carriere findCarriereById(int id) {
-        return (Carriere)em.createNamedQuery("Carriere.findByIdcarriere").setParameter("idcarriere", id);
+        return (Carriere)em.createNamedQuery("Carriere.findByIdcarriere").setParameter("idcarriere", id).getSingleResult();
     }
-    
     
 }

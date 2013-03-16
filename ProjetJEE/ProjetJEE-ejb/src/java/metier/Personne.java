@@ -5,12 +5,15 @@
 package metier;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -18,10 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,7 +29,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "personne")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Personne.findAll", query = "SELECT p FROM Personne p"),
     @NamedQuery(name = "Personne.findByIdpersonne", query = "SELECT p FROM Personne p WHERE p.idpersonne = :idpersonne"),
@@ -42,10 +41,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Personne.findByEmail", query = "SELECT p FROM Personne p WHERE p.email = :email"),
     @NamedQuery(name = "Personne.findByDateDeNaissance", query = "SELECT p FROM Personne p WHERE p.dateDeNaissance = :dateDeNaissance")})
 public class Personne implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idpersonne")
     private Integer idpersonne;
     @Size(max = 45)
@@ -54,9 +54,8 @@ public class Personne implements Serializable {
     @Size(max = 45)
     @Column(name = "prenom")
     private String prenom;
-    @Size(max = 45)
     @Column(name = "annee_inscription")
-    private String anneeInscription;
+    private Integer anneeInscription;
     @Size(max = 45)
     @Column(name = "membre")
     private String membre;
@@ -74,7 +73,7 @@ public class Personne implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dateDeNaissance;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpersonne")
-    private Collection<Carriere> carriereCollection;
+    private Collection<Carriere> carriereCollection = new ArrayList<Carriere>();
 
     public Personne() {
     }
@@ -83,6 +82,28 @@ public class Personne implements Serializable {
         this.idpersonne = idpersonne;
     }
 
+    public Personne(String nom, String prenom, Integer anneeInscription, String membre, String login, String motDePasse, String email, Date dateDeNaissance) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.anneeInscription = anneeInscription;
+        this.membre = membre;
+        this.login = login;
+        this.motDePasse = motDePasse;
+        this.email = email;
+        this.dateDeNaissance = dateDeNaissance;
+    }
+    public Personne(Integer idpersonne, String nom, String prenom, Integer anneeInscription, String membre, String login, String motDePasse, String email, Date dateDeNaissance) {
+        this.idpersonne = idpersonne;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.anneeInscription = anneeInscription;
+        this.membre = membre;
+        this.login = login;
+        this.motDePasse = motDePasse;
+        this.email = email;
+        this.dateDeNaissance = dateDeNaissance;
+    }
+    
     public Integer getIdpersonne() {
         return idpersonne;
     }
@@ -107,11 +128,11 @@ public class Personne implements Serializable {
         this.prenom = prenom;
     }
 
-    public String getAnneeInscription() {
+    public Integer getAnneeInscription() {
         return anneeInscription;
     }
 
-    public void setAnneeInscription(String anneeInscription) {
+    public void setAnneeInscription(Integer anneeInscription) {
         this.anneeInscription = anneeInscription;
     }
 
@@ -155,7 +176,6 @@ public class Personne implements Serializable {
         this.dateDeNaissance = dateDeNaissance;
     }
 
-    @XmlTransient
     public Collection<Carriere> getCarriereCollection() {
         return carriereCollection;
     }
@@ -184,9 +204,18 @@ public class Personne implements Serializable {
         return true;
     }
 
+    public void addCarriere(Carriere c) {
+        if (!carriereCollection.contains(c)) {
+            carriereCollection.add(c);
+        }
+        if (c.getIdpersonne() != null) {
+            c.setIdpersonne(this);
+        }
+
+    }
+
     @Override
     public String toString() {
-        return "metier.Personne[ idpersonne=" + idpersonne + " ]";
+        return "metier.Personne[ idpersonne=" + idpersonne + " ][ nom=" + nom + " ][ prenom=" + prenom + " ]";
     }
-    
 }

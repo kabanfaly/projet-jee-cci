@@ -6,6 +6,7 @@ package beans;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import metier.Personne;
 
@@ -29,8 +30,23 @@ public class PersonneFacade extends AbstractFacade<Personne> implements Personne
 
     @Override
     public Personne findPersonneById(int id) {
-        return (Personne)em.createNamedQuery("Carriere.findByIdcarriere").setParameter("idpersonne", id);
+        return (Personne)em.createNamedQuery("Personne.findByIdpersonne").setParameter("idpersonne", id).getSingleResult();
+    }
+
+  
+
+    @Override
+    public Personne findPersonneByEmail(String email) {
+        return (Personne)em.createNamedQuery("Personne.findByEmail").setParameter("email", email).getSingleResult();
     }
     
+    @Override
+    public void create(Personne p){
+       try {
+             findPersonneByEmail(p.getEmail());
+        } catch (NoResultException e) {
+            em.persist(p);
+        }
+    }
     
 }
