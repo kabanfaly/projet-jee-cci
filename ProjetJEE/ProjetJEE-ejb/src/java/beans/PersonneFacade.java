@@ -32,7 +32,11 @@ public class PersonneFacade extends AbstractFacade<Personne> implements Personne
 
     @Override
     public Personne findPersonneById(int id) {
-        return (Personne) em.createNamedQuery("Personne.findByIdpersonne").setParameter("idpersonne", id).getSingleResult();
+        try {
+            return (Personne) em.createNamedQuery("Personne.findByIdpersonne").setParameter("idpersonne", id).getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
     @Override

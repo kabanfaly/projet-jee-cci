@@ -6,8 +6,13 @@ package personne;
 
 import beans.PersonneFacadeLocal;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -38,17 +43,73 @@ public class Personnes extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String page = "personnes.jsp";
-        request.getSession(true).setAttribute("message", "");
+        request.setAttribute("message", "");
         String action = request.getParameter("action");
+        //liste des annees d'inscription
+        Collection<Integer> anneeInscription = new ArrayList<Integer>();
+        for (int i = 2013; i > 1995; i--) {
+            anneeInscription.add(i);
+        }
+        request.setAttribute("anneeInscription", anneeInscription);
+        //Liste des années de naissance
+        Collection<Integer> anneeNaissance = new ArrayList<Integer>();
+        anneeNaissance.add(0);
+        for(int i=1995; i> 1950; i--){
+            anneeNaissance.add(i);
+        }
+        request.setAttribute("anneeNaissance", anneeNaissance);
+        // Liste des mois des 12 mois de l'année
+        Collection<Integer> moisNaissance = new ArrayList<Integer>();
+        for(int i=0; i<=12; i++){
+            moisNaissance.add(i);
+        }
+        request.setAttribute("moisNaissance", moisNaissance);
+        // Liste des jours du mois
+        Collection<Integer> jourNaissance = new ArrayList<Integer>();
+        for(int i=0; i<=31; i++){
+            jourNaissance.add(i);
+        }
+        request.setAttribute("jourNaissance", jourNaissance);
+        
         if (action.equals("test")) { // creation des personnes predefinies
             this.createPersonneTests();
             Collection<Personne> p = personneFacade.findAll();
             request.setAttribute("personnes", p);
-        } else if (action.equals("tout")) { // Affichage de toutes les personnes de la filiaire cii
+        } else if (action.equals("tout")) { // Affichage de toutes les personnes de la filiaire cci
             Collection<Personne> p = personneFacade.findAll();
             request.setAttribute("personnes", p);
-        } else if (action.equals("inscription")) {
+
+        } else if (action.equals("inscription")) { // Aller  à la page d'inscription           
             page = "inscription.jsp";
+        } else if (action.equals("modifierPersonne")) { // Modifier un personne
+            Integer personneID = Integer.parseInt(request.getParameter("modifId"));
+            Personne p = personneFacade.findPersonneById(personneID);
+            if (p != null) {
+                System.out.println(p);
+                request.setAttribute("personne", p);
+                page = "inscription.jsp";
+            } else {
+                page = "erreur.jsp";
+                request.setAttribute("message", "Aucune personne correspondante trouvée");
+            }
+        } else if (action.equals("supprimerPersonne")) {
+            if (!request.getParameter("supprId").equals("")) {
+                Integer personneID = Integer.parseInt(request.getParameter("supprId"));
+                Personne p = personneFacade.findPersonneById(personneID);
+                if (p != null) {
+                    personneFacade.remove(p);
+                    Collection<Personne> personnes = personneFacade.findAll();
+                    request.setAttribute("personnes", personnes);
+                    page = "personnes.jsp";
+                } else {
+                    page = "erreur.jsp";
+                    request.setAttribute("message", "Aucune personne correspondante trouvée");
+                }
+            } else {
+                Collection<Personne> personnes = personneFacade.findAll();
+                request.setAttribute("personnes", personnes);
+                page = "personnes.jsp";
+            }
         }
         RequestDispatcher dp = request.getRequestDispatcher(page);
         dp.forward(request, response);
@@ -59,10 +120,11 @@ public class Personnes extends HttpServlet {
      * Creation des comptes de test
      */
     private void createPersonneTests() {
-        personneFacade.create(new Personne("KABA", "Mamady", 2008, "OUI", "mkaba", "kaba", "mamkaba2000@yahoo.fr", new Date(1988, 12, 8)));
-        personneFacade.create(new Personne("KABA_2", "Mamady", 2008, "OUI", "mkaba2", "kaba2", "mamkaba2001@yahoo.fr", new Date(1987, 12, 8)));
-        personneFacade.create(new Personne("KABA_3", "Mamady", 2008, "OUI", "mkaba3", "kaba3", "mamkaba2002@yahoo.fr", new Date(1986, 12, 8)));
-        personneFacade.create(new Personne("KABA_4", "Mamady", 2008, "OUI", "mkaba4", "kaba4", "mamkaba2003@yahoo.fr", new Date(1985, 12, 8)));
+        personneFacade.create(new Personne("KABA", "Mamady", 2008, "OUI", "mkaba", "kaba", "mamkaba2000@yahoo.fr", new Date(1988-1900, 11, 8))); // 8-dec-1988
+        personneFacade.create(new Personne("KABA_2", "Mamady", 2008, "OUI", "mkaba2", "kaba2", "mamkaba2001@yahoo.fr", new Date(1987-1900, 11, 8)));
+        personneFacade.create(new Personne("KABA_3", "Mamady", 2008, "OUI", "mkaba3", "kaba3", "mamkaba2002@yahoo.fr", new Date(1986-1900, 11, 8)));
+        personneFacade.create(new Personne("KABA_4", "Mamady", 2008, "OUI", "mkaba4", "kaba4", "mamkaba2003@yahoo.fr", new Date(1985-1900, 11, 8)));
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

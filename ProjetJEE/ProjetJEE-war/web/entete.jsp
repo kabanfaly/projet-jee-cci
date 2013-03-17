@@ -23,7 +23,8 @@
                 <div id="logosection" >
                     <div class="sitelogo"></div>
                     <div class="sitename">
-                        CCI<span></span>            </div>
+                        CCI
+                    </div>                    
                 </div>
                 <div id="header">
                     <div class="title">
@@ -31,6 +32,7 @@
                         <span class="bigtext">Ma nouvelle filiaire</span><br />
                         Pour réussir ma vie professionelle.           
                     </div>
+                    <span style="color: white;"><c:if test="${connexion}">${personne.nom} ${personne.prenom}</c:if></span>           
                 </div>
             </div>
 
@@ -81,7 +83,9 @@
 
                             <h2>Personnes</h2>
                             <ul>
-                                <li><a href="personnes?action=test">Créer des personnes tests</a></li>
+                                <c:if test="${personne.login == 'admin'}" >
+                                    <li><a href="personnes?action=test">Créer des personnes tests</a></li>
+                                    </c:if>
                                 <li><a href="personnes?action=tout">Afficher toutes les personnes</a></li>
                             </ul>   
                         </div>

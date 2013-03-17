@@ -26,3 +26,22 @@ table{
     color: white;
     cursor: pointer;
 }
+.enregistrer{
+     margin-top: 30px;
+}
+.enregistrer form{
+    margin: 0px 10px 0px 0px;
+    padding: 0px;
+    text-align: left;
+}
+.enregistrer table{
+    
+    border:  black;
+}
+
+.enregistrer input{
+    width: 170px;
+}
+.erreur{
+    color: red;
+}
