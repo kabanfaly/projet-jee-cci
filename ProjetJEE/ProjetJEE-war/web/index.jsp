@@ -5,7 +5,6 @@
 --%>
 
 <%@include file="entete.jsp" %>
-        <h1>Hello World!</h1>
-        <a href="personnes?action=test">Personnes tests</a><br>
-        <a href="personnes?action=tout">Personnes</a>
+        <h1>Bienvenue sur le site de la cci</h1>
+        
 <%@include file="pied.jsp" %>

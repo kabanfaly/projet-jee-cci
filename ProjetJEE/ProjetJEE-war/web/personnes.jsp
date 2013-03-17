@@ -6,7 +6,7 @@
 <%@include file="entete.jsp" %>
     <h1>Listes des personnes</h1>
     <br>
-    <table cellspacing="1" border="1">
+    <table cellspacing="1" border="0">
         <tr>
             <th>ID</th>
             <th>Nom</th>
@@ -17,9 +17,10 @@
             <th>Supprimer</th>
             <th>Modifier</th>
         </tr>
-
+        <% int i=0; %>
         <c:forEach var="p" items="${requestScope['personnes']}">
-            <tr>
+            <% i%=2 ;%>
+            <tr id="line<%=i%>">
                 <td align="center">${p.idpersonne}</td>
                 <td align="center">${p.nom}</td>
                 <td align="center">${p.prenom}</td>
@@ -29,6 +30,7 @@
                 <td align="center"><a href="personnes?action=supprimerPersonne&supprId=${p.idpersonne}">Suppr</a></td>
                 <td align="center"><a href="personnes?action=modifierPersonne&modifId=${p.idpersonne}">Modifier</a></td>
             </tr>
+            <% i++ ;%>
         </c:forEach> 
 
     </table>

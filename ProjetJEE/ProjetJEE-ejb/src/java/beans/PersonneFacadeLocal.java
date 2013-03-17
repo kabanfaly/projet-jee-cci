@@ -32,4 +32,6 @@ public interface PersonneFacadeLocal {
     Personne findPersonneById(int id);
 
     Personne findPersonneByEmail(String email);
+
+    Personne findPersonneByLoginMdp(String login, String mdp);
 }

@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import metier.Personne;
 
 /**
@@ -16,6 +17,7 @@ import metier.Personne;
  */
 @Stateless
 public class PersonneFacade extends AbstractFacade<Personne> implements PersonneFacadeLocal {
+
     @PersistenceContext(unitName = "ProjetJEE-ejbPU")
     private EntityManager em;
 
@@ -30,23 +32,32 @@ public class PersonneFacade extends AbstractFacade<Personne> implements Personne
 
     @Override
     public Personne findPersonneById(int id) {
-        return (Personne)em.createNamedQuery("Personne.findByIdpersonne").setParameter("idpersonne", id).getSingleResult();
+        return (Personne) em.createNamedQuery("Personne.findByIdpersonne").setParameter("idpersonne", id).getSingleResult();
     }
-
-  
 
     @Override
     public Personne findPersonneByEmail(String email) {
-        return (Personne)em.createNamedQuery("Personne.findByEmail").setParameter("email", email).getSingleResult();
+        return (Personne) em.createNamedQuery("Personne.findByEmail").setParameter("email", email).getSingleResult();
     }
-    
+
     @Override
-    public void create(Personne p){
-       try {
-             findPersonneByEmail(p.getEmail());
+    public void create(Personne p) {
+        try {
+            findPersonneByEmail(p.getEmail());
         } catch (NoResultException e) {
             em.persist(p);
         }
     }
-    
+
+    @Override
+    public Personne findPersonneByLoginMdp(String login, String mdp) {
+        try {
+            Query q = em.createQuery("SELECT p FROM Personne p WHERE p.login = :login AND p.motDePasse = :motDePasse");
+            q.setParameter("login", login);
+            q.setParameter("motDePasse", mdp);
+            return (Personne) q.getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
 }

@@ -1,0 +1,28 @@
+/* 
+    Document   : style2
+    Created on : 17 mars 2013, 08:50:13
+    Author     : kaba
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+#line0 {
+    background-color: #cce8f2;    
+}
+#line1 {
+    background-color: white;    
+}
+table th{
+    background-color: #d5d5d5;
+}
+table{
+    border: solid 1px gray;
+}
+.leftcolumn_box01_bottom a{
+    color: white;
+    cursor: pointer;
+}

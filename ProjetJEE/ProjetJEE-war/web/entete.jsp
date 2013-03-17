@@ -10,6 +10,9 @@
         <meta name="keywords" content="CCI, Tours" />
         <meta name="description" content="CCI, Tours" />
         <link href="css/style.css" rel="stylesheet" type="text/css" />
+        <link href="css/style2.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="js/jquery.js" ></script>
+        <script type="text/javascript" src="js/script.js"></script>
 
     </head>
 
@@ -20,13 +23,13 @@
                 <div id="logosection" >
                     <div class="sitelogo"></div>
                     <div class="sitename">
-            	CCI<span></span>            </div>
+                        CCI<span></span>            </div>
                 </div>
                 <div id="header">
                     <div class="title">
                         CCI<br />
                         <span class="bigtext">Ma nouvelle filiaire</span><br />
-    	    	Pour réussir ma vie professionelle.           
+                        Pour réussir ma vie professionelle.           
                     </div>
                 </div>
             </div>
@@ -38,7 +41,10 @@
                 <div id="menu">
                     <ul>
                         <li><a href="index.jsp">Accueil</a></li>
-                        <li><a href="#">Déconnexion</a></li>
+                            <c:if test="${connexion}">
+                            <li><a href="profil.jsp">Mon profil</a></li>
+                            <li><a href="connexion?action=logout">Déconnexion</a></li>
+                            </c:if>
                     </ul>
                 </div>
 
@@ -52,31 +58,34 @@
 
                 <div id="templatemo_left_column">
 
-                    <div id="leftcolumn_box01">
-                        <div class="leftcolumn_box01_top">
-                            <h2>Se connecter</h2>
+                    <c:if test="${!connexion}">
+                        <div id="leftcolumn_box01">
+                            <div class="leftcolumn_box01_top">
+                                <h2>Se connecter</h2>
+                            </div>
+                            <div class="leftcolumn_box01_bottom">
+
+                                <form method="post" action="connexion?action=login" onsubmit="return verifierChamp();">
+                                    <div>${message}</div>
+                                    <div class="form_row"><label>Login</label><input class="inputfield" name="login" type="text" id="login"/></div>
+                                    <div class="form_row"><label>Password</label><input class="inputfield" name="mdp" type="password" id="mdp"/></div>
+                                    <input class="button" type="submit" name="Submit" value="Login" />
+                                    <div><a href="personnes?action=inscription"><label>S'inscrire</label></a></div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="leftcolumn_box01_bottom">
-                            <form method="get" action="Login">
-                                <div class="form_row"><label>Login</label><input class="inputfield" name="login" type="text" id="login"/></div>
-                                <div class="form_row"><label>Password</label><input class="inputfield" name="password" type="password" id="password"/></div>
-                                <input class="button" type="submit" name="Submit" value="Login" />
-                            </form>
+                    </c:if>
+
+                    <c:if test="${connexion}">
+                        <div id="leftcolumn_box02">
+
+                            <h2>Personnes</h2>
+                            <ul>
+                                <li><a href="personnes?action=test">Créer des personnes tests</a></li>
+                                <li><a href="personnes?action=tout">Afficher toutes les personnes</a></li>
+                            </ul>   
                         </div>
-                    </div>
-
-                    <div id="leftcolumn_box02">
-
-
-                        <h2>Clients</h2>
-                        <ul>
-                            <li><a href="clients?action=test">Créer des clients tests</a></li>
-                            <li><a href="clients?action=creerClient">Créer un client</a></li>
-                            <li><a href="clients?action=creerCompteClient">Ajouter un compte à un client</a></li>
-                            <li><a href="clients?action=afficherClients">Afficher les clients</a></li>
-
-                        </ul>                       
-                    </div>
+                    </c:if>
                 </div>
 
                 <!-- end of left column -->
