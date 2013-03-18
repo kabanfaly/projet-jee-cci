@@ -3,7 +3,6 @@
     Created on : 16 mars 2013, 00:10:18
     Author     : kaba
 --%>
-<%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@include file="entete.jsp" %>
 <h1>Listes des personnes</h1>

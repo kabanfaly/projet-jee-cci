@@ -6,13 +6,9 @@ package personne;
 
 import beans.PersonneFacadeLocal;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -54,23 +50,23 @@ public class Personnes extends HttpServlet {
         //Liste des années de naissance
         Collection<Integer> anneeNaissance = new ArrayList<Integer>();
         anneeNaissance.add(0);
-        for(int i=1995; i> 1950; i--){
+        for (int i = 1995; i > 1950; i--) {
             anneeNaissance.add(i);
         }
         request.setAttribute("anneeNaissance", anneeNaissance);
         // Liste des mois des 12 mois de l'année
         Collection<Integer> moisNaissance = new ArrayList<Integer>();
-        for(int i=0; i<=12; i++){
+        for (int i = 0; i <= 12; i++) {
             moisNaissance.add(i);
         }
         request.setAttribute("moisNaissance", moisNaissance);
         // Liste des jours du mois
         Collection<Integer> jourNaissance = new ArrayList<Integer>();
-        for(int i=0; i<=31; i++){
+        for (int i = 0; i <= 31; i++) {
             jourNaissance.add(i);
         }
         request.setAttribute("jourNaissance", jourNaissance);
-        
+        Collection<Personne> personnes;
         if (action.equals("test")) { // creation des personnes predefinies
             this.createPersonneTests();
             Collection<Personne> p = personneFacade.findAll();
@@ -98,7 +94,7 @@ public class Personnes extends HttpServlet {
                 Personne p = personneFacade.findPersonneById(personneID);
                 if (p != null) {
                     personneFacade.remove(p);
-                    Collection<Personne> personnes = personneFacade.findAll();
+                    personnes = personneFacade.findAll();
                     request.setAttribute("personnes", personnes);
                     page = "personnes.jsp";
                 } else {
@@ -106,10 +102,28 @@ public class Personnes extends HttpServlet {
                     request.setAttribute("message", "Aucune personne correspondante trouvée");
                 }
             } else {
-                Collection<Personne> personnes = personneFacade.findAll();
+                personnes = personneFacade.findAll();
                 request.setAttribute("personnes", personnes);
                 page = "personnes.jsp";
             }
+        } else if (action.equals("creerPersonne")) { // enregistrer une nouvelle personne
+            //Personne(String nom, String prenom, Integer anneeInscription, String membre, String login, String motDePasse, String email, Date dateDeNaissance) 
+            int mois = Integer.parseInt(request.getParameter("mois"));
+            int jour = Integer.parseInt(request.getParameter("jour"));
+            int annee = Integer.parseInt(request.getParameter("annee"));
+            Personne p = new Personne(request.getParameter("nom"), request.getParameter("prenom"),
+                    Integer.parseInt(request.getParameter("annee_inscription")), request.getParameter("membre"),
+                    request.getParameter("login"), request.getParameter("motDePasse"), request.getParameter("email"),
+                    new Date(annee - 1900, mois - 1, jour));
+            //Creation de la nouvelle personne
+            personneFacade.create(p);
+
+            //Recherche de toutes les personnes pour l'affichage
+            personnes = personneFacade.findAll();
+            request.setAttribute("personnes", personnes);
+            request.setAttribute("message", "Enregistrement OK");
+            page = "enregistrement_ok.jsp";
+
         }
         RequestDispatcher dp = request.getRequestDispatcher(page);
         dp.forward(request, response);
@@ -120,11 +134,11 @@ public class Personnes extends HttpServlet {
      * Creation des comptes de test
      */
     private void createPersonneTests() {
-        personneFacade.create(new Personne("KABA", "Mamady", 2008, "OUI", "mkaba", "kaba", "mamkaba2000@yahoo.fr", new Date(1988-1900, 11, 8))); // 8-dec-1988
-        personneFacade.create(new Personne("KABA_2", "Mamady", 2008, "OUI", "mkaba2", "kaba2", "mamkaba2001@yahoo.fr", new Date(1987-1900, 11, 8)));
-        personneFacade.create(new Personne("KABA_3", "Mamady", 2008, "OUI", "mkaba3", "kaba3", "mamkaba2002@yahoo.fr", new Date(1986-1900, 11, 8)));
-        personneFacade.create(new Personne("KABA_4", "Mamady", 2008, "OUI", "mkaba4", "kaba4", "mamkaba2003@yahoo.fr", new Date(1985-1900, 11, 8)));
-       
+        personneFacade.create(new Personne("KABA", "Mamady", 2008, "OUI", "mkaba", "kaba", "mamkaba2000@yahoo.fr", new Date(1988 - 1900, 11, 8))); // 8-dec-1988
+        personneFacade.create(new Personne("KABA_2", "Mamady", 2008, "OUI", "mkaba2", "kaba2", "mamkaba2001@yahoo.fr", new Date(1987 - 1900, 11, 8)));
+        personneFacade.create(new Personne("KABA_3", "Mamady", 2008, "OUI", "mkaba3", "kaba3", "mamkaba2002@yahoo.fr", new Date(1986 - 1900, 11, 8)));
+        personneFacade.create(new Personne("KABA_4", "Mamady", 2008, "OUI", "mkaba4", "kaba4", "mamkaba2003@yahoo.fr", new Date(1985 - 1900, 11, 8)));
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
