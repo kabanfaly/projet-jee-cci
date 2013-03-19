@@ -14,7 +14,7 @@ import metier.Carriere;
  * @author kaba
  */
 @Stateless
-public class CarriereFacade extends AbstractFacade<Carriere> implements CarriereFacadeLocal {
+public class CarriereFacade extends AbstractFacade<Carriere> implements CarriereFacadeLocal, CarriereFacadeRemote{
     @PersistenceContext(unitName = "ProjetJEE-ejbPU")
     private EntityManager em;
 

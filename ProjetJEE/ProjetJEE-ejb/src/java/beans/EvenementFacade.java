@@ -14,7 +14,7 @@ import metier.Evenement;
  * @author kaba
  */
 @Stateless
-public class EvenementFacade extends AbstractFacade<Evenement> implements EvenementFacadeLocal {
+public class EvenementFacade extends AbstractFacade<Evenement> implements EvenementFacadeLocal, EvenementFacadeRemote {
     @PersistenceContext(unitName = "ProjetJEE-ejbPU")
     private EntityManager em;
 

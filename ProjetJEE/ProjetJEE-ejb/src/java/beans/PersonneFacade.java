@@ -16,7 +16,7 @@ import metier.Personne;
  * @author kaba
  */
 @Stateless
-public class PersonneFacade extends AbstractFacade<Personne> implements PersonneFacadeLocal {
+public class PersonneFacade extends AbstractFacade<Personne> implements PersonneFacadeLocal, PersonneFacadeRemote {
 
     @PersistenceContext(unitName = "ProjetJEE-ejbPU")
     private EntityManager em;
