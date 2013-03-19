@@ -1,9 +1,18 @@
-Créer un base de données derby sous glassfish
+Créer une base de données derby sous glassfish
 db = ccidb
 login = kaba
 mdp = kaba
 
-Création d'un nouveau compte admin lors de la connexion
+Oubien 
+
+Créer une base de données mysql
+
+Créer une nouvelle ressource JDBC
+Créer une nouvelle persistence UNIT
+
+
+Première connexion:
+Création automatique d'un nouveau compte admin lors de la connexion
 
 Login = admin
 mdp = admin
