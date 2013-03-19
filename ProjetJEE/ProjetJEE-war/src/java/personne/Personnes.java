@@ -138,7 +138,7 @@ public class Personnes extends HttpServlet {
         personneFacade.create(new Personne("KABA_2", "Mamady", 2008, "OUI", "mkaba2", "kaba2", "mamkaba2001@yahoo.fr", new Date(1987 - 1900, 11, 8)));
         personneFacade.create(new Personne("KABA_3", "Mamady", 2008, "OUI", "mkaba3", "kaba3", "mamkaba2002@yahoo.fr", new Date(1986 - 1900, 11, 8)));
         personneFacade.create(new Personne("KABA_4", "Mamady", 2008, "OUI", "mkaba4", "kaba4", "mamkaba2003@yahoo.fr", new Date(1985 - 1900, 11, 8)));
-
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
