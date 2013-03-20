@@ -18,8 +18,8 @@
         <th>Année d'inscription</th>
         <th>Membre CCI</th>
             <c:if test="${personne.login == 'admin'}" >
-            <th>Supprimer</th>
             <th>Modifier</th>
+            <th>Supprimer</th>
             </c:if>
     </tr>
     <% int i = 0;%>

@@ -41,15 +41,10 @@ public class PersonneFacade extends AbstractFacade<Personne> implements Personne
 
     @Override
     public Personne findPersonneByEmail(String email) {
-        return (Personne) em.createNamedQuery("Personne.findByEmail").setParameter("email", email).getSingleResult();
-    }
-
-    @Override
-    public void create(Personne p) {
         try {
-            findPersonneByEmail(p.getEmail());
-        } catch (NoResultException e) {
-            em.persist(p);
+            return (Personne) em.createNamedQuery("Personne.findByEmail").setParameter("email", email).getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
         }
     }
 

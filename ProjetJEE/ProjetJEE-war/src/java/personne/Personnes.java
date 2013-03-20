@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import javax.ejb.EJB;
+import javax.persistence.NoResultException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -67,6 +68,9 @@ public class Personnes extends HttpServlet {
         }
         request.setAttribute("jourNaissance", jourNaissance);
         Collection<Personne> personnes;
+
+        //gestion des reques
+
         if (action.equals("test")) { // creation des personnes predefinies
             this.createPersonneTests();
             Collection<Personne> p = personneFacade.findAll();
@@ -75,20 +79,23 @@ public class Personnes extends HttpServlet {
             Collection<Personne> p = personneFacade.findAll();
             request.setAttribute("personnes", p);
 
-        } else if (action.equals("inscription")) { // Aller  à la page d'inscription           
-            page = "inscription.jsp";
-        } else if (action.equals("modifierPersonne")) { // Modifier un personne
+        } else if (action.equals("inscription")) { // Aller  à la page d'inscription 
+            request.setAttribute("titre", "Inscription");
+            page = "enregistrement_personne.jsp";
+        } else if (action.equals("modifierPersonne")) { // Aller à la page de modification d'un personne
             Integer personneID = Integer.parseInt(request.getParameter("modifId"));
             Personne p = personneFacade.findPersonneById(personneID);
             if (p != null) {
+                request.setAttribute("modifId", personneID);
                 System.out.println(p);
+                request.setAttribute("titre", "Modifier");
                 request.setAttribute("personne", p);
-                page = "inscription.jsp";
+                page = "enregistrement_personne.jsp";
             } else {
                 page = "erreur.jsp";
                 request.setAttribute("message", "Aucune personne correspondante trouvée");
             }
-        } else if (action.equals("supprimerPersonne")) {
+        } else if (action.equals("supprimerPersonne")) { // Supprimer une personne
             if (!request.getParameter("supprId").equals("")) {
                 Integer personneID = Integer.parseInt(request.getParameter("supprId"));
                 Personne p = personneFacade.findPersonneById(personneID);
@@ -106,23 +113,44 @@ public class Personnes extends HttpServlet {
                 request.setAttribute("personnes", personnes);
                 page = "personnes.jsp";
             }
-        } else if (action.equals("creerPersonne")) { // enregistrer une nouvelle personne
-            //Personne(String nom, String prenom, Integer anneeInscription, String membre, String login, String motDePasse, String email, Date dateDeNaissance) 
+        } else if (action.equals("creerPersonne")) { // enregistrer une nouvelle personne et mofidier une personne
+            Personne p;
             int mois = Integer.parseInt(request.getParameter("mois"));
             int jour = Integer.parseInt(request.getParameter("jour"));
             int annee = Integer.parseInt(request.getParameter("annee"));
-            Personne p = new Personne(request.getParameter("nom"), request.getParameter("prenom"),
-                    Integer.parseInt(request.getParameter("annee_inscription")), request.getParameter("membre"),
-                    request.getParameter("login"), request.getParameter("motDePasse"), request.getParameter("email"),
-                    new Date(annee - 1900, mois - 1, jour));
-            //Creation de la nouvelle personne
-            personneFacade.create(p);
+            if (request.getParameter("modifId").equals("")) { // Enregistrement
 
-            //Recherche de toutes les personnes pour l'affichage
-            personnes = personneFacade.findAll();
-            request.setAttribute("personnes", personnes);
-            request.setAttribute("message", "Enregistrement OK");
-            page = "enregistrement_ok.jsp";
+                if (personneFacade.findPersonneByEmail(request.getParameter("email")) == null) {
+                    request.setAttribute("message", "L'email saisi existe déjà pour une autre personne");
+                    page = "erreur.jsp";
+                } else {
+                    p = new Personne(request.getParameter("nom"), request.getParameter("prenom"),
+                            Integer.parseInt(request.getParameter("annee_inscription")), request.getParameter("membre"),
+                            request.getParameter("login"), request.getParameter("motDePasse"), request.getParameter("email"),
+                            new Date(annee - 1900, mois - 1, jour));
+                    //Creation de la nouvelle personne
+                    personneFacade.create(p);
+                    request.setAttribute("message", "Enregistrement OK");
+                    page = "enregistrement_ok.jsp";
+                }
+            } else { // Modification 
+                Integer personneID = Integer.parseInt(request.getParameter("modifId"));
+                try {
+                    p = new Personne(request.getParameter("nom"), request.getParameter("prenom"),
+                            Integer.parseInt(request.getParameter("annee_inscription")), request.getParameter("membre"),
+                            request.getParameter("login"), request.getParameter("motDePasse"), request.getParameter("email"),
+                            new Date(annee - 1900, mois - 1, jour));
+                    p.setIdpersonne(personneID);
+                    personneFacade.edit(p);
+                    request.setAttribute("message", "Modification OK");
+                    page = "enregistrement_ok.jsp";
+
+                } catch (NoResultException ex) {
+                    request.setAttribute("message", "Le modification de la personne n'a pas été effectuée");
+                    page = "erreur.jsp";
+                }
+            }
+
 
         }
         RequestDispatcher dp = request.getRequestDispatcher(page);
@@ -134,11 +162,21 @@ public class Personnes extends HttpServlet {
      * Creation des comptes de test
      */
     private void createPersonneTests() {
-        personneFacade.create(new Personne("KABA", "Mamady", 2008, "OUI", "mkaba", "kaba", "mamkaba2000@yahoo.fr", new Date(1988 - 1900, 11, 8))); // 8-dec-1988
-        personneFacade.create(new Personne("KABA_2", "Mamady", 2008, "OUI", "mkaba2", "kaba2", "mamkaba2001@yahoo.fr", new Date(1987 - 1900, 11, 8)));
-        personneFacade.create(new Personne("KABA_3", "Mamady", 2008, "OUI", "mkaba3", "kaba3", "mamkaba2002@yahoo.fr", new Date(1986 - 1900, 11, 8)));
-        personneFacade.create(new Personne("KABA_4", "Mamady", 2008, "OUI", "mkaba4", "kaba4", "mamkaba2003@yahoo.fr", new Date(1985 - 1900, 11, 8)));
-        
+        if (personneFacade.findPersonneByEmail("mamkaba2000@yahoo.fr") == null) {
+            personneFacade.create(new Personne("KABA", "Mamady", 2008, "OUI", "mkaba", "kaba", "mamkaba2000@yahoo.fr", new Date(1988 - 1900, 11, 20))); // 8-dec-1988
+        }
+
+        if (personneFacade.findPersonneByEmail("mamkaba2001@yahoo.fr") == null) {
+            personneFacade.create(new Personne("KABA_2", "Mamady", 2008, "OUI", "mkaba2", "kaba2", "mamkaba2001@yahoo.fr", new Date(1987 - 1900, 11, 8)));
+        }
+
+        if (personneFacade.findPersonneByEmail("mamkaba2002@yahoo.fr") == null) {
+            personneFacade.create(new Personne("KABA_3", "Mamady", 2008, "OUI", "mkaba3", "kaba3", "mamkaba2002@yahoo.fr", new Date(1986 - 1900, 11, 8)));
+        }
+
+        if (personneFacade.findPersonneByEmail("mamkaba2003@yahoo.fr") == null) {
+            personneFacade.create(new Personne("KABA_4", "Mamady", 2008, "OUI", "mkaba4", "kaba4", "mamkaba2003@yahoo.fr", new Date(1985 - 1900, 11, 8)));
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

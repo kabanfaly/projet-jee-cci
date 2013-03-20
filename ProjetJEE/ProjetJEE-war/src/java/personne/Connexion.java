@@ -8,6 +8,7 @@ import beans.PersonneFacadeLocal;
 import java.io.IOException;
 import java.util.Date;
 import javax.ejb.EJB;
+import javax.persistence.NoResultException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -37,12 +38,12 @@ public class Connexion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //Création du compte admin
-        
+
         createCompteAdmin();
         String page = "index.jsp";
         request.setAttribute("message", "");
         String action = request.getParameter("action");
-        
+
         if (action.equals("login")) {
             //Trouver la personne correspondant au login et au mot de passe
             Personne p = personneFacade.findPersonneByLoginMdp(request.getParameter("login"), request.getParameter("mdp"));
@@ -67,10 +68,13 @@ public class Connexion extends HttpServlet {
     /**
      * Creation du compte admin
      */
-     private void createCompteAdmin() {
-        personneFacade.create(new Personne("ADMIN", "Admin", 2013, "OUI", "admin", "admin", "admin@yahoo.fr", new Date(1988, 12, 8)));
+    private void createCompteAdmin() {
+        if (personneFacade.findPersonneByEmail("admin@yahoo.fr") == null) {
+            personneFacade.create(new Personne("ADMIN", "Admin", 2013, "OUI", "admin", "admin", "admin@yahoo.fr", new Date(1988 - 1900, 11, 8)));
+        }
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP
      * <code>GET</code> method.

@@ -6,10 +6,11 @@
 
 <%@page import="java.util.Date"%>
 <%@include file="entete.jsp" %>
-<h1>Inscription</h1>
+<h1>${titre}</h1>
 <div class="succes">${message}</div>
 <div class="enregistrer">
-    <form method="post" action="personnes?action=creerPersonne" onsubmit="return validerFormulaireInscription();">
+    <!-- On ajoute l'id de modification dans le cas d'une modification -->
+    <form method="post" action="personnes?action=creerPersonne&modifId=${modifId}" onsubmit="return validerFormulaireInscription();">
         <table>
             <tr>
                 <td align="right">Nom:</td><td><input  type="text" size="60" name="nom" id="nom" value="${personne.nom}"></td>
@@ -44,12 +45,12 @@
                 </c:if>
                 <td align="right">Date de naissance:</td>
                 <td>
-                    <select name="mois"  id="mois">
+                    <select name="jour"  id="jour">
                         <c:forEach var="j" items="${jourNaissance}">
                             <option value="${j}" <c:if test="${jour == j}"> selected </c:if> > ${j}</option>                            
                         </c:forEach>
                     </select>
-                    <select name="jour"  id="jour">
+                    <select name="mois"  id="mois">
                         <c:forEach var="m" items="${moisNaissance}">
                             <option value="${m}" <c:if test="${mois == m}"> selected </c:if> > ${m}</option>                            
                         </c:forEach>
