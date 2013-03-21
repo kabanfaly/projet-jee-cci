@@ -4,6 +4,7 @@
  */
 package beans;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Remote;
 import metier.Evenement;
@@ -30,5 +31,7 @@ public interface EvenementFacadeRemote {
     int count();
 
     Evenement findEvenementById(int id);
+
+    Evenement findEvenementByLieuDate(String lieu, Date jour);
     
 }

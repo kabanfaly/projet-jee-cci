@@ -3,7 +3,7 @@
     Created on : 16 mars 2013, 00:10:18
     Author     : kaba
 --%>
-<%@page import="java.text.SimpleDateFormat"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="entete.jsp" %>
 <h1>Listes des personnes</h1>
 <br>
@@ -23,21 +23,15 @@
             </c:if>
     </tr>
     <% int i = 0;%>
-
     <c:forEach var="p" items="${personnes}">
         <c:if test="${p.login != 'admin'}">
-            <c:set var="naissance" value="${p.dateDeNaissance}" scope="request" />
-            <%
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                request.setAttribute("naissance", sdf.format(request.getAttribute("naissance")));
-            %>
             <tr id="line<%=i % 2%>">
                 <td align="center"><%=i + 1%></td>
                 <td align="center">${p.nom}</td>
                 <td align="center">${p.prenom}</td>
                 <td align="center">${p.email}</td>
                 <td align="center">${p.login}</td>
-                <td align="center">${naissance}</td>
+                <td align="center"><fmt:formatDate value="${p.dateDeNaissance}" pattern="dd/MM/yyyy"/></td>
                 <td align="center">${p.anneeInscription}</td>
                 <td align="center">${p.membre}</td>
                 <c:if test="${personne.login == 'admin'}" >
@@ -48,10 +42,6 @@
             <% i++;%>
         </c:if>
     </c:forEach> 
-
 </table>
 <br>
-<a href="index.jsp">Retour au menu principal</a>
-
-
 <%@include file="pied.jsp" %>

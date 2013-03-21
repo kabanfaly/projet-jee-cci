@@ -28,21 +28,22 @@
                 </div>
                 <div id="header">
                     <div class="title">
-                        CCI<br />
+                        CCI - <span id="cci"> Compétence Complémentaire en Informatique</span><br />
                         <span class="bigtext">Ma nouvelle filiaire</span><br />
                         Pour réussir ma vie professionelle.           
                     </div>
                     <span style="color: white;"><c:if test="${connexion}">${personne.nom} ${personne.prenom}</c:if></span>           
+                    </div>
                 </div>
-            </div>
 
-            <div id="templatemo_menu">
-                <div id="search">
-                    <input class="textfield" type="text" value="Search..."/> <input class="send_btn" type="submit" value="Go" />
-                </div>
-                <div id="menu">
-                    <ul>
-                        <li><a href="index.jsp">Accueil</a></li>
+                <div id="templatemo_menu">
+                    <div id="search">
+                        <input class="textfield" type="text" value="Search..."/> <input class="send_btn" type="submit" value="Go" />
+                    </div>
+                    <div id="menu">
+                        <ul>
+                            <li><a href="index.jsp">Accueil</a></li>
+                            <li><a href="evenements">&Eacute;vènements</a></li>
                             <c:if test="${connexion}">
                             <li><a href="profil.jsp">Mon profil</a></li>
                             <li><a href="connexion?action=logout">Déconnexion</a></li>
@@ -89,6 +90,15 @@
                                 <li><a href="personnes?action=tout">Afficher toutes les personnes</a></li>
                             </ul>   
                         </div>
+                        <c:if test="${personne.login == 'admin'}" >
+                            <div id="leftcolumn_box02">
+                                <h2>&Eacute;vènements</h2>
+                                <ul>
+                                    <li><a href="evenements?action=test">Créer des évènement tests</a></li>
+                                    <li><a href="evenements?action=gerer">Gérér les évènements</a></li>
+                                </ul>   
+                            </div>
+                        </c:if>
                     </c:if>
                 </div>
 

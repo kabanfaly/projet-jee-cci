@@ -5,6 +5,5 @@
 --%>
 
 <%@include file="entete.jsp" %>
-        <h1>Bienvenue sur le site de la cci</h1>
-        
+<h1>Bienvenue sur le site de la cci</h1>
 <%@include file="pied.jsp" %>

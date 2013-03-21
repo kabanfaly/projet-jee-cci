@@ -2,11 +2,15 @@
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <servlet>
         <servlet-name>personne</servlet-name>
-        <servlet-class>personne.Personnes</servlet-class>
+        <servlet-class>servlet.Personnes</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Connexion</servlet-name>
-        <servlet-class>personne.Connexion</servlet-class>
+        <servlet-class>servlet.Connexion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Evenements</servlet-name>
+        <servlet-class>servlet.Evenements</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>personne</servlet-name>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>Connexion</servlet-name>
         <url-pattern>/connexion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Evenements</servlet-name>
+        <url-pattern>/evenements</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

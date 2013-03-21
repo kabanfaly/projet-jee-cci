@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Evenement.findAll", query = "SELECT e FROM Evenement e"),
     @NamedQuery(name = "Evenement.findByIdevenement", query = "SELECT e FROM Evenement e WHERE e.idevenement = :idevenement"),
-    @NamedQuery(name = "Evenement.findByDate", query = "SELECT e FROM Evenement e WHERE e.date = :date"),
+    @NamedQuery(name = "Evenement.findByJour", query = "SELECT e FROM Evenement e WHERE e.jour = :jour"),
     @NamedQuery(name = "Evenement.findByTitre", query = "SELECT e FROM Evenement e WHERE e.titre = :titre"),
     @NamedQuery(name = "Evenement.findByLieu", query = "SELECT e FROM Evenement e WHERE e.lieu = :lieu")})
 public class Evenement implements Serializable {
@@ -41,9 +41,9 @@ public class Evenement implements Serializable {
     @Basic(optional = false)
     @Column(name = "idevenement")
     private Integer idevenement;
-    @Column(name = "date")
+    @Column(name = "jour")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private Date jour;
     @Size(max = 45)
     @Column(name = "titre")
     private String titre;
@@ -62,6 +62,13 @@ public class Evenement implements Serializable {
         this.idevenement = idevenement;
     }
 
+    public Evenement(Date date, String titre, String description, String lieu) {
+        this.jour = date;
+        this.titre = titre;
+        this.description = description;
+        this.lieu = lieu;
+    }
+    
     public Integer getIdevenement() {
         return idevenement;
     }
@@ -70,12 +77,12 @@ public class Evenement implements Serializable {
         this.idevenement = idevenement;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getJour() {
+        return jour;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setJour(Date jour) {
+        this.jour = jour;
     }
 
     public String getTitre() {
