@@ -8,7 +8,6 @@ import beans.PersonneFacadeLocal;
 import java.io.IOException;
 import java.util.Date;
 import javax.ejb.EJB;
-import javax.persistence.NoResultException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -48,7 +47,7 @@ public class Connexion extends HttpServlet {
             //Trouver la personne correspondant au login et au mot de passe
             Personne p = personneFacade.findPersonneByLoginMdp(request.getParameter("login"), request.getParameter("mdp"));
             if (p != null) {
-                request.getSession(true).setAttribute("personne", p);
+                request.getSession(true).setAttribute("utilisateur", p);
                 request.getSession(true).setAttribute("connexion", true);
                 page = "index.jsp";
             } else {
@@ -57,7 +56,7 @@ public class Connexion extends HttpServlet {
 
             }
         } else if (action.equals("logout")) {// Déconnexion
-            request.getSession(true).setAttribute("personne", null);
+            request.getSession(true).setAttribute("utilisateur", null);
             request.getSession(true).setAttribute("connexion", false);
             page = "index.jsp";
         }

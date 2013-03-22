@@ -23,12 +23,12 @@
     <c:forEach var="e" items="${evenements}">
         <tr id="line<%=i % 2%>">
             <td align="center"><%=i + 1%></td>
-            <td align="center">${e.titre}</td>
-            <td align="center">${e.description}</td>
+            <td>${e.titre}</td>
+            <td>${e.description}</td>
             <td align="center"><fmt:formatDate value="${e.jour}" pattern="dd/MM/yyyy HH:mm"/></td>
             <td align="center">${e.lieu}</td>
     <td align="center"><a href="evenements?action=modifier&modifId=${e.idevenement}"><img src="images/edit.png"/></a></td>
-    <td align="center"><a href="evenements?action=supprimer&supprId=${e.idevenement}"><img src="images/delete.png"/></a></td>
+    <td align="center"><a href="evenements?action=supprimer&supprId=${e.idevenement}" onclick=" return confirm('Voulez vous supprimer cet évènement?');"><img src="images/delete.png"/></a></td>
 </tr>
 <% i++;%>
 </c:forEach> 

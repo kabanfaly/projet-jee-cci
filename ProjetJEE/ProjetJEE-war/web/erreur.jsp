@@ -5,6 +5,5 @@
 --%>
 
 <%@include file="entete.jsp" %>
-<h1>Hello World!</h1>
 <div class="erreur">${message}</div>
 <%@include file="pied.jsp" %>

@@ -17,7 +17,7 @@
         <th>Date de naissance</th>
         <th>Année d'inscription</th>
         <th>Membre CCI</th>
-            <c:if test="${personne.login == 'admin'}" >
+            <c:if test="${utilisateur.login == 'admin'}" >
             <th>Modifier</th>
             <th>Supprimer</th>
             </c:if>
@@ -34,9 +34,9 @@
                 <td align="center"><fmt:formatDate value="${p.dateDeNaissance}" pattern="dd/MM/yyyy"/></td>
                 <td align="center">${p.anneeInscription}</td>
                 <td align="center">${p.membre}</td>
-                <c:if test="${personne.login == 'admin'}" >
+                <c:if test="${utilisateur.login == 'admin'}" >
                     <td align="center"><a href="personnes?action=modifierPersonne&modifId=${p.idpersonne}"><img src="images/edit.png"/></a></td>
-                    <td align="center"><a href="personnes?action=supprimerPersonne&supprId=${p.idpersonne}"><img src="images/delete.png"/></a></td>
+                    <td align="center"><a href="personnes?action=supprimerPersonne&supprId=${p.idpersonne}" onclick=" return confirm('Voulez vous supprimer cette personne?');"><img src="images/delete.png"/></a></td>
                         </c:if>
             </tr>
             <% i++;%>

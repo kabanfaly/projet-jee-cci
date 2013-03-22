@@ -21,7 +21,7 @@ function validerFormulaireInscription() {
     var valide = true;
     $('.enregistrer input, .enregistrer select').each(function(e) {
         $('#erreur' + e).remove();
-        if ($(this).attr('value') === '' || $(this).attr('value') == 0) {
+        if (($(this).attr('value') === '' || $(this).attr('value') == 0) && ($(this).attr('name') !== 'minute' && $(this).attr('name') !== 'heure')) {
 
             $(this).after('<span style="color:red;" id="erreur' + e + '">Ce champ est vide</span>');
             valide = false;

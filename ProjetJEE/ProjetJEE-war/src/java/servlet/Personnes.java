@@ -80,6 +80,7 @@ public class Personnes extends HttpServlet {
 
         } else if (action.equals("inscription")) { // Aller  à la page d'inscription 
             request.setAttribute("titre", "Inscription");
+            request.setAttribute("personne", null);
             page = "enregistrement_personne.jsp";
         } else if (action.equals("modifierPersonne")) { // Aller à la page de modification d'un personne
             Integer personneID = Integer.parseInt(request.getParameter("modifId"));
@@ -119,7 +120,7 @@ public class Personnes extends HttpServlet {
             int annee = Integer.parseInt(request.getParameter("annee"));
             if (request.getParameter("modifId").equals("")) { // Enregistrement
 
-                if (personneFacade.findPersonneByEmail(request.getParameter("email")) == null) {
+                if (personneFacade.findPersonneByEmail(request.getParameter("email")) != null) {
                     request.setAttribute("message", "L'email saisi existe déjà pour une autre personne");
                     page = "erreur.jsp";
                 } else {
@@ -162,7 +163,7 @@ public class Personnes extends HttpServlet {
      */
     private void createPersonneTests() {
         if (personneFacade.findPersonneByEmail("mamkaba2000@yahoo.fr") == null) {
-            personneFacade.create(new Personne("KABA", "Mamady", 2008, "OUI", "mkaba", "kaba", "mamkaba2000@yahoo.fr", new Date(1988 - 1900, 11, 20))); // 8-dec-1988
+            personneFacade.create(new Personne("KABA", "Mamady", 2008, "OUI", "mkaba", "kaba", "mamkaba2000@yahoo.fr", new Date(1988 - 1900, 11, 8))); // 8-dec-1988
         }
 
         if (personneFacade.findPersonneByEmail("mamkaba2001@yahoo.fr") == null) {

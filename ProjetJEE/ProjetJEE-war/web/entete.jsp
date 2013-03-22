@@ -32,7 +32,7 @@
                         <span class="bigtext">Ma nouvelle filiaire</span><br />
                         Pour réussir ma vie professionelle.           
                     </div>
-                    <span style="color: white;"><c:if test="${connexion}">${personne.nom} ${personne.prenom}</c:if></span>           
+                    <span style="color: white;"><c:if test="${connexion}">${utilisateur.nom} ${utilisateur.prenom}</c:if></span>           
                     </div>
                 </div>
 
@@ -84,18 +84,20 @@
 
                             <h2>Personnes</h2>
                             <ul>
-                                <c:if test="${personne.login == 'admin'}" >
-                                    <li><a href="personnes?action=test">Créer des personnes tests</a></li>
-                                    </c:if>
                                 <li><a href="personnes?action=tout">Afficher toutes les personnes</a></li>
+                                    <c:if test="${utilisateur.login == 'admin'}" >
+                                    <li><a href="personnes?action=test">Créer des personnes tests</a></li>
+                                    <li><a href="personnes?action=inscription">Ajouter une personne</a></li>
+                                    </c:if>
                             </ul>   
                         </div>
-                        <c:if test="${personne.login == 'admin'}" >
+                        <c:if test="${utilisateur.login == 'admin'}" >
                             <div id="leftcolumn_box02">
                                 <h2>&Eacute;vènements</h2>
                                 <ul>
+                                    <li><a href="evenements?action=gerer">Afficher les évènements</a></li>
                                     <li><a href="evenements?action=test">Créer des évènement tests</a></li>
-                                    <li><a href="evenements?action=gerer">Gérér les évènements</a></li>
+                                    <li><a href="evenements?action=inscription">Ajouter un évènement</a></li>
                                 </ul>   
                             </div>
                         </c:if>

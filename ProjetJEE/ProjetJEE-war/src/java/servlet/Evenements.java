@@ -6,9 +6,11 @@ package servlet;
 
 import beans.EvenementFacadeLocal;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import javax.ejb.EJB;
+import javax.persistence.NoResultException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -39,6 +41,38 @@ public class Evenements extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String page = "evenements.jsp";
+
+        //Liste des années 
+        Collection<Integer> anneeEvenement = new ArrayList<Integer>();
+        anneeEvenement.add(0);
+        for (int i = 2013; i <= 2015; i++) {
+            anneeEvenement.add(i);
+        }
+        request.setAttribute("anneeEvenement", anneeEvenement);
+        // Liste des mois des 12 mois de l'année
+        Collection<Integer> moisEvenement = new ArrayList<Integer>();
+        for (int i = 0; i <= 12; i++) {
+            moisEvenement.add(i);
+        }
+        request.setAttribute("moisEvenement", moisEvenement);
+        // Liste des jours du mois
+        Collection<Integer> jourEvenement = new ArrayList<Integer>();
+        for (int i = 0; i <= 31; i++) {
+            jourEvenement.add(i);
+        }
+        request.setAttribute("jourEvenement", jourEvenement);
+        // Liste des heures
+        Collection<Integer> heureEvenement = new ArrayList<Integer>();
+        for (int i = 0; i < 24; i++) {
+            heureEvenement.add(i);
+        }
+        request.setAttribute("heureEvenement", heureEvenement);
+        // Liste des heures
+        Collection<Integer> minuteEvenement = new ArrayList<Integer>();
+        for (int i = 0; i < 59; i++) {
+            minuteEvenement.add(i);
+        }
+        request.setAttribute("minuteEvenement", minuteEvenement);
         Collection<Evenement> evenements;
         String action = request.getParameter("action");
         if (action != null) {
@@ -47,16 +81,66 @@ public class Evenements extends HttpServlet {
                 page = "gestion_evenements.jsp";
             } else if (action.equals("gerer")) {
                 page = "gestion_evenements.jsp";
-            } else if (action.equals("supprimer")) {
+            } else if (action.equals("supprimer")) { // Supprimer un évènement
                 if (!request.getParameter("supprId").equals("")) {
                     Integer evenementID = Integer.parseInt(request.getParameter("supprId"));
                     Evenement e = evenementFacade.findEvenementById(evenementID);
                     if (e != null) {
-                        evenementFacade.remove(e);                        
+                        evenementFacade.remove(e);
                         page = "gestion_evenements.jsp";
                     } else {
                         page = "erreur.jsp";
                         request.setAttribute("message", "Aucun évènement correspondant trouvé");
+                    }
+                }
+            } else if (action.equals("inscription")) {
+                request.setAttribute("titre", "Ajouter un évènement");
+                request.setAttribute("evenement", null);
+                page = "enregistrement_evenement.jsp";
+            } else if (action.equals("modifier")) { // Aller à la page de modification d'un évènement
+                Integer evenementID = Integer.parseInt(request.getParameter("modifId"));
+                Evenement e = evenementFacade.findEvenementById(evenementID);
+                if (e != null) {
+                    request.setAttribute("modifId", evenementID);
+                    System.out.println(e);
+                    request.setAttribute("titre", "Modifier");
+                    request.setAttribute("evenement", e);
+                    page = "enregistrement_evenement.jsp";
+                } else {
+                    page = "erreur.jsp";
+                    request.setAttribute("message", "Aucun évènement correspondant trouvé");
+                }
+            } else if (action.equals("creer")) {
+                Evenement e;
+                int mois = Integer.parseInt(request.getParameter("mois"));
+                int jour = Integer.parseInt(request.getParameter("jour"));
+                int annee = Integer.parseInt(request.getParameter("annee"));
+                int heure = Integer.parseInt(request.getParameter("heure"));
+                int minute = Integer.parseInt(request.getParameter("minute"));
+                Date d = new Date(annee - 1900, mois - 1, jour, heure, minute);
+                if (request.getParameter("modifId").equals("")) { // Enregistrement
+                    if (evenementFacade.findEvenementByLieuDate(request.getParameter("lieu"), d) != null) {
+                        request.setAttribute("message", "Un évènement existe le même jour au lieu indiqué");
+                        page = "erreur.jsp";
+                    } else {
+                        e = new Evenement(d, request.getParameter("titre"), request.getParameter("description"), request.getParameter("lieu"));
+                        evenementFacade.create(e);
+                        request.setAttribute("message", "Enregistrement OK");
+                        page = "enregistrement_ok.jsp";
+                    }
+                } else { // Modification
+                    Integer evenementID = Integer.parseInt(request.getParameter("modifId"));
+                    try {
+                        e = new Evenement(d, request.getParameter("titre"), request.getParameter("description"), request.getParameter("lieu"));
+
+                        e.setIdevenement(evenementID);
+                        evenementFacade.edit(e);
+                        request.setAttribute("message", "Modification OK");
+                        page = "enregistrement_ok.jsp";
+
+                    } catch (NoResultException ex) {
+                        request.setAttribute("message", "Le modification de l'évènement n'a pas été effectuée");
+                        page = "erreur.jsp";
                     }
                 }
             }
@@ -68,8 +152,14 @@ public class Evenements extends HttpServlet {
     }
 
     private void creerEvenementTests() {
-        if (evenementFacade.findEvenementByLieuDate("Paris", new Date(2013 - 1900, 04, 20, 15, 30)) == null) {
-            evenementFacade.create(new Evenement(new Date(2013 - 1900, 04, 20, 15, 30), "Evènement", "Rencontre des ancien", "Paris"));
+        if (evenementFacade.findEvenementByLieuDate("Paris", new Date(2013 - 1900, 4, 15, 15, 30)) == null) { // 15-mai-2013 à 15h30
+            evenementFacade.create(new Evenement(new Date(2013 - 1900, 4, 15, 15, 30), "Rencontre des anciens", "Rencontre des anciens", "Paris"));
+        }
+        if (evenementFacade.findEvenementByLieuDate("Nice", new Date(2013 - 1900, 3, 10, 19, 30)) == null) {
+            evenementFacade.create(new Evenement(new Date(2013 - 1900, 3, 10, 19, 30), "Gala", "Gala des anciens", "Nice"));
+        }
+        if (evenementFacade.findEvenementByLieuDate("Tours", new Date(2013 - 1900, 8, 5, 18, 30)) == null) {
+            evenementFacade.create(new Evenement(new Date(2013 - 1900, 8, 5, 18, 30), "Soirée", "Soirée de rencontre avec les nouveaux", "Tours"));
         }
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
