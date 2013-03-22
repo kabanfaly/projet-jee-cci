@@ -87,7 +87,6 @@ public class Personnes extends HttpServlet {
             Personne p = personneFacade.findPersonneById(personneID);
             if (p != null) {
                 request.setAttribute("modifId", personneID);
-                System.out.println(p);
                 request.setAttribute("titre", "Modifier");
                 request.setAttribute("personne", p);
                 page = "enregistrement_personne.jsp";

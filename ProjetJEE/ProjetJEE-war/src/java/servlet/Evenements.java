@@ -102,7 +102,6 @@ public class Evenements extends HttpServlet {
                 Evenement e = evenementFacade.findEvenementById(evenementID);
                 if (e != null) {
                     request.setAttribute("modifId", evenementID);
-                    System.out.println(e);
                     request.setAttribute("titre", "Modifier");
                     request.setAttribute("evenement", e);
                     page = "enregistrement_evenement.jsp";
@@ -143,6 +142,16 @@ public class Evenements extends HttpServlet {
                         page = "erreur.jsp";
                     }
                 }
+            } else if (action.equals("detail")) {
+                Integer evenementID = Integer.parseInt(request.getParameter("evenementId"));
+                Evenement e = evenementFacade.findEvenementById(evenementID);
+                if (e != null) {
+                    request.setAttribute("evenement", e);
+                    page = "detail_evenement.jsp";
+                } else {
+                    page = "erreur.jsp";
+                    request.setAttribute("message", "Aucun évènement correspondant trouvé");
+                }
             }
         }
         evenements = evenementFacade.findAll();
@@ -153,7 +162,7 @@ public class Evenements extends HttpServlet {
 
     private void creerEvenementTests() {
         if (evenementFacade.findEvenementByLieuDate("Paris", new Date(2013 - 1900, 4, 15, 15, 30)) == null) { // 15-mai-2013 à 15h30
-            evenementFacade.create(new Evenement(new Date(2013 - 1900, 4, 15, 15, 30), "Rencontre des anciens", "Rencontre des anciens", "Paris"));
+            evenementFacade.create(new Evenement(new Date(2013 - 1900, 4, 15, 15, 30), "Rencontre", "Rencontre des anciens", "Paris"));
         }
         if (evenementFacade.findEvenementByLieuDate("Nice", new Date(2013 - 1900, 3, 10, 19, 30)) == null) {
             evenementFacade.create(new Evenement(new Date(2013 - 1900, 3, 10, 19, 30), "Gala", "Gala des anciens", "Nice"));
