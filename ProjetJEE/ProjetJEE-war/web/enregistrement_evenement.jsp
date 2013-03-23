@@ -4,6 +4,7 @@
     Author     : kaba
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page import="java.util.Date"%>
 <%@include file="entete.jsp" %>
 <h1>${titre}</h1>
@@ -61,6 +62,12 @@
                             <option value="${m}" <c:if test="${minute == m}"> selected </c:if> > ${m}</option>                            
                         </c:forEach>
                     </select> m
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Date:</td>
+                <td>
+                    <input type="text" value="<fmt:formatDate value='${evenement.jour}' pattern='dd/MM/yyyy HH:mm' />"  name="jours" id="jour" onclick="displayCalendar(document.forms[0].jours, 'dd/mm/yyyy hh:ii', this);">
                 </td>
             </tr>
             <tr>

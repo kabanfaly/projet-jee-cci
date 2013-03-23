@@ -12,7 +12,10 @@
         <link href="css/style.css" rel="stylesheet" type="text/css" />
         <link href="css/style2.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="js/jquery.js" ></script>
+        <script type="text/javascript" src="js/jquery-ui.js" ></script>
         <script type="text/javascript" src="js/script.js"></script>
+        <link type="text/css" rel="stylesheet" href="css/dhtmlgoodies_calendar.css?random=20051112" media="screen"/>
+	<script type="text/javascript" src="js/dhtmlgoodies_calendar.js?random=20060118"></script>
 
     </head>
 
@@ -68,10 +71,10 @@
                             </div>
                             <div class="leftcolumn_box01_bottom">
 
-                                <form method="post" action="connexion?action=login" onsubmit="return verifierChamp();">
+                                <form method="post" action="connexion?action=login">
                                     <div>${message}</div>
-                                    <div class="form_row"><label>Login</label><input class="inputfield" name="login" type="text" id="login"/></div>
-                                    <div class="form_row"><label>Password</label><input class="inputfield" name="mdp" type="password" id="mdp"/></div>
+                                    <div class="form_row"><label>Login</label><input class="inputfield" name="login" required="true" type="text" id="login"/></div>
+                                    <div class="form_row"><label>Password</label><input class="inputfield" name="mdp" required="true" type="password" id="mdp"/></div>
                                     <input class="button" type="submit" name="Submit" value="Login" />
                                     <div><a href="personnes?action=inscription"><label>S'inscrire</label></a></div>
                                 </form>

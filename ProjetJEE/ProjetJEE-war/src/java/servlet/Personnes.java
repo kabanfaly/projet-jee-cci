@@ -117,6 +117,7 @@ public class Personnes extends HttpServlet {
             int mois = Integer.parseInt(request.getParameter("mois"));
             int jour = Integer.parseInt(request.getParameter("jour"));
             int annee = Integer.parseInt(request.getParameter("annee"));
+            
             if (request.getParameter("modifId").equals("")) { // Enregistrement
 
                 if (personneFacade.findPersonneByEmail(request.getParameter("email")) != null) {
