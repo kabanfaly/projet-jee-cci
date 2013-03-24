@@ -49,7 +49,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2" align="center"><input type="Submit" value="Valider"/></td>
+                <td colspan="2" align="center"><input type="Submit" type="Submit" style="width: 60px;"  value="Valider"/></td>
             </tr>
         </table>
         <div></div>

@@ -216,7 +216,6 @@ public class Personne implements Serializable {
         }
 
     }
-
     @Override
     public String toString() {
         return "metier.Personne[ idpersonne=" + idpersonne + " ][ nom=" + nom + " ][ prenom=" + prenom + " ]";

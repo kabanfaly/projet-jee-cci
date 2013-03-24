@@ -39,7 +39,7 @@ table{
 }
 .enregistrer table{
     
-    border:  black;
+    border:  none;
 }
 
 .enregistrer input{
@@ -69,4 +69,23 @@ div#evenements{
 #evenements #titre {
      background-color: #6ebfdc;
      color: white;
+}
+#infoPerso, #carrieres{
+    background-color: #E2EBED;
+    width: 300px;
+}
+
+#carriere{
+    background-color: #E2EBED;
+}
+#ajoutCarriere{
+    color: green;
+    font-weight: bold;
+}
+.carriere{
+    background-color: #d5d5d5;
+    margin-top: 3px;
+}
+#maCarriere{
+    margin-top: 5px;
 }

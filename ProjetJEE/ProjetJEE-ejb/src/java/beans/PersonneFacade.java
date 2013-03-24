@@ -58,5 +58,5 @@ public class PersonneFacade extends AbstractFacade<Personne> implements Personne
         } catch (NoResultException ex) {
             return null;
         }
-    }
+    } 
 }

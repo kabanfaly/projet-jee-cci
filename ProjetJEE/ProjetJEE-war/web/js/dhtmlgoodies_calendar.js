@@ -50,7 +50,7 @@ var turnOffYearSpan = false;     // true = Only show This Year and Next, false =
 var weekStartsOnSunday = false;  // true = Start the week on Sunday, false = start the week on Monday
 var showWeekNumber = true;  // true = show week number,  false = do not show week number
 
-var languageCode = 'en';	// Possible values: 	en,ge,no,nl,es,pt-br,fr
+var languageCode = 'fr';	// Possible values: 	en,ge,no,nl,es,pt-br,fr
 							// en = english, ge = german, no = norwegian,nl = dutch, es = spanish, pt-br = portuguese, fr = french, da = danish, hu = hungarian(Use UTF-8 doctype for hungarian)
 
 var calendar_display_time = true;
@@ -121,7 +121,7 @@ switch(languageCode){
 		var todayString = 'Hoje &eacute;';
 		break;
 	case "fr":      /* French */
-		var monthArray = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+		var monthArray = ['Janvier','F&eacute;vrier','Mars','Avril','Mai','Juin','Juillet','Ao&ucirc;t','Septembre','Octobre','Novembre','D&eacute;cembre'];
 		var monthArrayShort = ['Jan','Fev','Mar','Avr','Mai','Jun','Jul','Aou','Sep','Oct','Nov','Dec'];
 		var dayArray = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
 		var weekString = 'Sem';
@@ -137,8 +137,8 @@ switch(languageCode){
 	case "hu":	/* Hungarian  - Remember to use UTF-8 encoding, i.e. the <meta> tag */
 		var monthArray = ['Január','Február','Március','�?prilis','Május','Június','Július','Augusztus','Szeptember','Október','November','December'];
 		var monthArrayShort = ['Jan','Feb','Márc','�?pr','Máj','Jún','Júl','Aug','Szep','Okt','Nov','Dec'];
-		var dayArray = ['Hé','Ke','Sze','Cs','Pé','Szo','Vas'];
-		var weekString = 'Hét';
+		var dayArray = ['H&eacute;','Ke','Sze','Cs','P&eacute;','Szo','Vas'];
+		var weekString = 'H&eacute;t';
 		var todayString = 'Mai nap';
 		break;
 	case "it":	/* Italian*/

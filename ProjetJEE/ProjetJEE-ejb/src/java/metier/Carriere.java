@@ -66,6 +66,14 @@ public class Carriere implements Serializable {
         this.idcarriere = idcarriere;
     }
 
+    public Carriere(Date dateDebut, Date dateFin, String employeur, String fonction, Personne idpersonne) {
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.employeur = employeur;
+        this.fonction = fonction;
+        this.idpersonne = idpersonne;        
+    }
+
     public Integer getIdcarriere() {
         return idcarriere;
     }
@@ -136,7 +144,7 @@ public class Carriere implements Serializable {
 
     @Override
     public String toString() {
-        return "metier.Carriere[ idcarriere=" + idcarriere + " ]";
+        return "metier.Carriere[ idcarriere=" + idcarriere + " ][ Date de début=" + dateDebut + " ][ Employeur=" + employeur + " ]";
     }
     
 }

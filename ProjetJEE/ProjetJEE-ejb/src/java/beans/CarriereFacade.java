@@ -6,6 +6,7 @@ package beans;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import metier.Carriere;
 
@@ -14,7 +15,8 @@ import metier.Carriere;
  * @author kaba
  */
 @Stateless
-public class CarriereFacade extends AbstractFacade<Carriere> implements CarriereFacadeLocal, CarriereFacadeRemote{
+public class CarriereFacade extends AbstractFacade<Carriere> implements CarriereFacadeLocal, CarriereFacadeRemote {
+
     @PersistenceContext(unitName = "ProjetJEE-ejbPU")
     private EntityManager em;
 
@@ -29,7 +31,10 @@ public class CarriereFacade extends AbstractFacade<Carriere> implements Carriere
 
     @Override
     public Carriere findCarriereById(int id) {
-        return (Carriere)em.createNamedQuery("Carriere.findByIdcarriere").setParameter("idcarriere", id).getSingleResult();
+        try{
+        return (Carriere) em.createNamedQuery("Carriere.findByIdcarriere").setParameter("idcarriere", id).getSingleResult();
+        }catch(NoResultException ex){
+            return null;
+        }
     }
-    
 }

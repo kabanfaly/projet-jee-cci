@@ -12,7 +12,6 @@
         <link href="css/style.css" rel="stylesheet" type="text/css" />
         <link href="css/style2.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="js/jquery.js" ></script>
-        <script type="text/javascript" src="js/jquery-ui.js" ></script>
         <script type="text/javascript" src="js/script.js"></script>
         <link type="text/css" rel="stylesheet" href="css/dhtmlgoodies_calendar.css?random=20051112" media="screen"/>
 	<script type="text/javascript" src="js/dhtmlgoodies_calendar.js?random=20060118"></script>
@@ -48,7 +47,7 @@
                             <li><a href="index.jsp">Accueil</a></li>
                             <li><a href="evenements">&Eacute;vènements</a></li>
                             <c:if test="${connexion}">
-                            <li><a href="profil.jsp">Mon profil</a></li>
+                            <li><a href="personnes?action=profil&id=${utilisateur.idpersonne}">Mon profil</a></li>
                             <li><a href="connexion?action=logout">Déconnexion</a></li>
                             </c:if>
                     </ul>

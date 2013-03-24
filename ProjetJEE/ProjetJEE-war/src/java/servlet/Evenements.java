@@ -44,25 +44,6 @@ public class Evenements extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String page = "evenements.jsp";
 
-        //Liste des années 
-        Collection<Integer> anneeEvenement = new ArrayList<Integer>();
-        anneeEvenement.add(0);
-        for (int i = 2013; i <= 2015; i++) {
-            anneeEvenement.add(i);
-        }
-        request.setAttribute("anneeEvenement", anneeEvenement);
-        // Liste des mois des 12 mois de l'année
-        Collection<Integer> moisEvenement = new ArrayList<Integer>();
-        for (int i = 0; i <= 12; i++) {
-            moisEvenement.add(i);
-        }
-        request.setAttribute("moisEvenement", moisEvenement);
-        // Liste des jours du mois
-        Collection<Integer> jourEvenement = new ArrayList<Integer>();
-        for (int i = 0; i <= 31; i++) {
-            jourEvenement.add(i);
-        }
-        request.setAttribute("jourEvenement", jourEvenement);
         // Liste des heures
         Collection<Integer> heureEvenement = new ArrayList<Integer>();
         for (int i = 0; i < 24; i++) {

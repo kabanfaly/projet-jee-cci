@@ -16,6 +16,15 @@
     <div><span id="titre">Date de naissance </span> <span><fmt:formatDate  value="${utilisateur.dateDeNaissance}" pattern="dd/MM/yyyy"/></span></div>
     <div><span id="titre">Année d'inscription: </span> <span>${utilisateur.anneeInscription}</span></div>
 </div>
+<div id="maCarriere">
+    <h4>Ma carrière</h4>
+    <c:forEach var="c" items="${utilisateur.carriereCollection}">
+         <div>
+             <span id="titre">Du <fmt:formatDate  value="${c.dateDebut}" pattern="dd/MM/yyyy"/> au :<fmt:formatDate  value="${c.dateFin}" pattern="dd/MM/yyyy"/></span>
+             <span>employé chez ${c.employeur} comme ${c.fonction}</span>
+         </div>
+    </c:forEach>
+</div>
 <a href="personnes?action=modifierPersonne&modifId=${utilisateur.idpersonne}">Modifier mon profil</a>
 <%@include file="pied.jsp" %>
 
