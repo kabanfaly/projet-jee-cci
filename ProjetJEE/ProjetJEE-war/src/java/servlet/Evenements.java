@@ -6,6 +6,8 @@ package servlet;
 
 import beans.EvenementFacadeLocal;
 import java.io.IOException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -111,12 +113,10 @@ public class Evenements extends HttpServlet {
                 }
             } else if (action.equals("creer")) {
                 Evenement e;
-                int mois = Integer.parseInt(request.getParameter("mois"));
-                int jour = Integer.parseInt(request.getParameter("jour"));
-                int annee = Integer.parseInt(request.getParameter("annee"));
                 int heure = Integer.parseInt(request.getParameter("heure"));
                 int minute = Integer.parseInt(request.getParameter("minute"));
-                Date d = new Date(annee - 1900, mois - 1, jour, heure, minute);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                Date d =  sdf.parse((String) request.getParameter("jour")+ " " +heure + ":" + minute, new ParsePosition(0));
                 if (request.getParameter("modifId").equals("")) { // Enregistrement
                     if (evenementFacade.findEvenementByLieuDate(request.getParameter("lieu"), d) != null) {
                         request.setAttribute("message", "Un évènement existe le même jour au lieu indiqué");

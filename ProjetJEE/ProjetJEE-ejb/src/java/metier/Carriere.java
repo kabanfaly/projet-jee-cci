@@ -32,8 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Carriere.findAll", query = "SELECT c FROM Carriere c"),
     @NamedQuery(name = "Carriere.findByIdcarriere", query = "SELECT c FROM Carriere c WHERE c.idcarriere = :idcarriere"),
-    @NamedQuery(name = "Carriere.findByAnneeDebut", query = "SELECT c FROM Carriere c WHERE c.anneeDebut = :anneeDebut"),
-    @NamedQuery(name = "Carriere.findByAnneeFin", query = "SELECT c FROM Carriere c WHERE c.anneeFin = :anneeFin"),
+    @NamedQuery(name = "Carriere.findBydateDebut", query = "SELECT c FROM Carriere c WHERE c.dateDebut = :dateDebut"),
+    @NamedQuery(name = "Carriere.findBydateFin", query = "SELECT c FROM Carriere c WHERE c.dateFin = :dateFin"),
     @NamedQuery(name = "Carriere.findByEmployeur", query = "SELECT c FROM Carriere c WHERE c.employeur = :employeur"),
     @NamedQuery(name = "Carriere.findByFonction", query = "SELECT c FROM Carriere c WHERE c.fonction = :fonction")})
 public class Carriere implements Serializable {
@@ -43,12 +43,12 @@ public class Carriere implements Serializable {
     @Basic(optional = false)
     @Column(name = "idcarriere")
     private Integer idcarriere;
-    @Column(name = "annee_debut")
+    @Column(name = "date_debut")
     @Temporal(TemporalType.DATE)
-    private Date anneeDebut;
-    @Column(name = "annee_fin")
+    private Date dateDebut;
+    @Column(name = "date_fin")
     @Temporal(TemporalType.DATE)
-    private Date anneeFin;
+    private Date dateFin;
     @Size(max = 45)
     @Column(name = "employeur")
     private String employeur;
@@ -74,20 +74,20 @@ public class Carriere implements Serializable {
         this.idcarriere = idcarriere;
     }
 
-    public Date getAnneeDebut() {
-        return anneeDebut;
+    public Date getdateDebut() {
+        return dateDebut;
     }
 
-    public void setAnneeDebut(Date anneeDebut) {
-        this.anneeDebut = anneeDebut;
+    public void setdateDebut(Date dateDebut) {
+        this.dateDebut = dateDebut;
     }
 
-    public Date getAnneeFin() {
-        return anneeFin;
+    public Date getdateFin() {
+        return dateFin;
     }
 
-    public void setAnneeFin(Date anneeFin) {
-        this.anneeFin = anneeFin;
+    public void setdateFin(Date dateFin) {
+        this.dateFin = dateFin;
     }
 
     public String getEmployeur() {

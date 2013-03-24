@@ -6,6 +6,8 @@ package servlet;
 
 import beans.PersonneFacadeLocal;
 import java.io.IOException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import metier.Personne;
+
 /**
  *
  * @author kaba
@@ -114,10 +117,8 @@ public class Personnes extends HttpServlet {
             }
         } else if (action.equals("creerPersonne")) { // enregistrer une nouvelle personne et mofidier une personne
             Personne p;
-            int mois = Integer.parseInt(request.getParameter("mois"));
-            int jour = Integer.parseInt(request.getParameter("jour"));
-            int annee = Integer.parseInt(request.getParameter("annee"));
-            
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date dateDeNaissance = sdf.parse((String) request.getParameter("dateDeNaissance"), new ParsePosition(0));
             if (request.getParameter("modifId").equals("")) { // Enregistrement
 
                 if (personneFacade.findPersonneByEmail(request.getParameter("email")) != null) {
@@ -127,7 +128,8 @@ public class Personnes extends HttpServlet {
                     p = new Personne(request.getParameter("nom"), request.getParameter("prenom"),
                             Integer.parseInt(request.getParameter("annee_inscription")), request.getParameter("membre"),
                             request.getParameter("login"), request.getParameter("motDePasse"), request.getParameter("email"),
-                            new Date(annee - 1900, mois - 1, jour));
+                            //new Date(annee - 1900, mois - 1, jour));
+                            dateDeNaissance);
                     //Creation de la nouvelle personne
                     personneFacade.create(p);
                     request.setAttribute("message", "Enregistrement OK");
@@ -139,7 +141,8 @@ public class Personnes extends HttpServlet {
                     p = new Personne(request.getParameter("nom"), request.getParameter("prenom"),
                             Integer.parseInt(request.getParameter("annee_inscription")), request.getParameter("membre"),
                             request.getParameter("login"), request.getParameter("motDePasse"), request.getParameter("email"),
-                            new Date(annee - 1900, mois - 1, jour));
+                            //new Date(annee - 1900, mois - 1, jour));
+                            dateDeNaissance);
                     p.setIdpersonne(personneID);
                     personneFacade.edit(p);
                     request.setAttribute("message", "Modification OK");

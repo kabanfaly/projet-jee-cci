@@ -32,8 +32,8 @@ DROP TABLE IF EXISTS `ccidb`.`carriere` ;
 CREATE  TABLE IF NOT EXISTS `ccidb`.`carriere` (
   `idcarriere` INT NOT NULL ,
   `idpersonne` INT NOT NULL ,
-  `annee_debut` YEAR NULL ,
-  `annee_fin` YEAR NULL ,
+  `date_debut` YEAR NULL ,
+  `date_fin` YEAR NULL ,
   `employeur` VARCHAR(45) NULL ,
   `fonction` VARCHAR(45) NULL ,
   PRIMARY KEY (`idcarriere`) ,
