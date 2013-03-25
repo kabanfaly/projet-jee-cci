@@ -6,11 +6,32 @@ mdp = kaba
 Oubien 
 
 Créer une base de données mysql
+login = kaba
+mdp = kaba
 
 Créer une nouvelle ressource JDBC
 Créer une nouvelle persistence UNIT
 
 
+Architecture de l'appli
+
+1- Les entités de persistance
+    Personne
+    Carriere
+    Evenement
+
+2- Les interfaces Beans
+    PersonneFacadeLocal,PersonneFacadeRemote (implémentées par PersonneFacade)
+    EvenementFacadeLocal,EvenementFacadeRemote (implémentées par EvenementFacade)
+    CarriereFacadeLocal,CarriereFacadeRemote (implémentées par CarriereFacade)
+
+3- Les Servlets
+    Personnes
+    Evenements
+    Connexion
+
+
+    
 Première connexion:
 Création automatique d'un nouveau compte admin lors de la connexion
 
