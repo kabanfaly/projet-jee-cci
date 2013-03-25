@@ -2,7 +2,8 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
-CREATE SCHEMA IF NOT EXISTS `ccidb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+DROP SCHEMA IF EXISTS `ccidb` ;
+CREATE SCHEMA IF NOT EXISTS `ccidb` DEFAULT CHARACTER SET latin1 ;
 USE `ccidb` ;
 
 -- -----------------------------------------------------
@@ -11,17 +12,19 @@ USE `ccidb` ;
 DROP TABLE IF EXISTS `ccidb`.`personne` ;
 
 CREATE  TABLE IF NOT EXISTS `ccidb`.`personne` (
-  `idpersonne` INT NOT NULL ,
-  `nom` VARCHAR(45) NULL ,
-  `prenom` VARCHAR(45) NULL ,
-  `annee_inscription` VARCHAR(45) NULL ,
-  `membre` VARCHAR(45) NULL ,
-  `login` VARCHAR(45) NULL ,
-  `mot_de_passe` VARCHAR(45) NULL ,
-  `email` VARCHAR(45) NULL ,
-  `date_de_naissance` DATE NULL ,
+  `idpersonne` INT(11) NOT NULL AUTO_INCREMENT ,
+  `annee_inscription` INT(11) NULL DEFAULT NULL ,
+  `date_de_naissance` DATE NULL DEFAULT NULL ,
+  `email` VARCHAR(255) NULL DEFAULT NULL ,
+  `login` VARCHAR(255) NULL DEFAULT NULL ,
+  `membre` VARCHAR(255) NULL DEFAULT NULL ,
+  `mot_de_passe` VARCHAR(255) NULL DEFAULT NULL ,
+  `nom` VARCHAR(255) NULL DEFAULT NULL ,
+  `prenom` VARCHAR(255) NULL DEFAULT NULL ,
   PRIMARY KEY (`idpersonne`) )
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
@@ -30,21 +33,21 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `ccidb`.`carriere` ;
 
 CREATE  TABLE IF NOT EXISTS `ccidb`.`carriere` (
-  `idcarriere` INT NOT NULL ,
-  `idpersonne` INT NOT NULL ,
-  `date_debut` YEAR NULL ,
-  `date_fin` YEAR NULL ,
-  `employeur` VARCHAR(45) NULL ,
-  `fonction` VARCHAR(45) NULL ,
+  `idcarriere` INT(11) NOT NULL AUTO_INCREMENT ,
+  `date_debut` DATE NULL DEFAULT NULL ,
+  `date_fin` DATE NULL DEFAULT NULL ,
+  `employeur` VARCHAR(255) NULL DEFAULT NULL ,
+  `fonction` VARCHAR(255) NULL DEFAULT NULL ,
+  `idpersonne` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`idcarriere`) ,
-  CONSTRAINT `fk_carriere_personne`
+  CONSTRAINT `FK_carriere_idpersonne`
     FOREIGN KEY (`idpersonne` )
-    REFERENCES `ccidb`.`personne` (`idpersonne` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    REFERENCES `ccidb`.`personne` (`idpersonne` ))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = latin1;
 
-CREATE INDEX `fk_carriere_personne_idx` ON `ccidb`.`carriere` (`idpersonne` ASC) ;
+CREATE INDEX `FK_carriere_idpersonne` ON `ccidb`.`carriere` (`idpersonne` ASC) ;
 
 
 -- -----------------------------------------------------
@@ -53,13 +56,15 @@ CREATE INDEX `fk_carriere_personne_idx` ON `ccidb`.`carriere` (`idpersonne` ASC)
 DROP TABLE IF EXISTS `ccidb`.`evenement` ;
 
 CREATE  TABLE IF NOT EXISTS `ccidb`.`evenement` (
-  `idevenement` INT NOT NULL ,
-  `date` DATETIME NULL ,
-  `titre` VARCHAR(45) NULL ,
-  `description` TEXT NULL ,
-  `lieu` VARCHAR(45) NULL ,
+  `idevenement` INT(11) NOT NULL AUTO_INCREMENT ,
+  `description` LONGTEXT NULL DEFAULT NULL ,
+  `jour` DATETIME NULL DEFAULT NULL ,
+  `lieu` VARCHAR(255) NULL DEFAULT NULL ,
+  `titre` VARCHAR(255) NULL DEFAULT NULL ,
   PRIMARY KEY (`idevenement`) )
-ENGINE = InnoDB;
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = latin1;
 
 
 
