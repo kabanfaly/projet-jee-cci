@@ -30,6 +30,39 @@ Architecture de l'appli
     Evenements
     Connexion
 
+Choix technologique:
+Base de données:
+    L'application est fonctionnelle aussi bien avec une base de données Java Derby qu'avec une base de données mysql. Il suffit cependant 
+    de modifier la section suivante du persistence.xml:
+        <jta-data-source>jdbc/cciJNDI</jta-data-source>
+
+Serveur d'application:
+    Glassfish 3.1: 
+        pour sa faciliter d'utilisation à travers la génération automatique des classes, des méthodes
+        pour sa maintenabilité très facile grâce à son interface d'administrateur
+        pour sa faciliter de créer facilement les fichiers de configuration au niveau du serveur
+        
+Outils de développement:
+    Netbeans 7.3: Outil assez complet pour faire du développement java, il contient par défaut plein de serveurs d'applications utilisés en java. Donc
+    pas besoin de faire d'installation supplémentaire.
+
+Outils de modelisation:
+    Mysql workbenck pour faire la conception de la base de données
+    Umbrello pour l'UML
+
+
+Architecture
+    L'application des composés principalement de trois parties:
+    une partie metier:
+        Contient les différentes entités (qui correspondent aux tables de la base de données)
+    une partie bean:
+        Qui s'occupe de la gestion des entités notamment à travers des interfaces
+    Une partie présentation:
+        Qui permet de présenter les données.
+    Une servlet pour traiter les données à afficher
+
+
+        
 
     
 Première connexion:
