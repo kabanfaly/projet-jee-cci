@@ -3,11 +3,13 @@ db = ccidb
 login = kaba
 mdp = kaba
 
+Puis choisir ProjetCCI_JNDI comme data source dans le fichier persistance.xml
 Oubien 
 
 Créer une base de données mysql
-login = kaba
-mdp = kaba
+login = root
+mdp = ""
+Puis choisir jdbc/cciJNDI comme data source dans le fichier persistance.xml
 
 Créer une nouvelle ressource JDBC
 Créer une nouvelle persistence UNIT
